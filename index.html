@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抖音商家评价 - 麦当劳</title>
+    <title>麦当劳商家评价</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -24,23 +24,29 @@
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
         
         .header {
             background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
             color: white;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
         }
         
         .header-icon {
             font-size: 50px;
             margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         .header-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
         }
         
@@ -49,10 +55,11 @@
         }
         
         .store-card {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
+            border: 2px solid #f0f0f0;
         }
         
         .store-header {
@@ -62,16 +69,16 @@
         }
         
         .store-logo {
-            width: 60px;
-            height: 60px;
-            background: #FFC72C;
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FFC72C 0%, #FFAA00 100%);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 35px;
             margin-right: 15px;
-            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(255, 199, 44, 0.3);
         }
         
         .store-info {
@@ -82,24 +89,26 @@
             font-size: 17px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
         
         .store-meta {
             font-size: 13px;
             color: #666;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .tag {
             display: inline-block;
-            background: #fff3e0;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
             color: #ff6b00;
-            padding: 3px 8px;
-            border-radius: 4px;
+            padding: 4px 10px;
+            border-radius: 12px;
             font-size: 11px;
-            margin-right: 5px;
-            margin-top: 5px;
+            font-weight: bold;
+            margin-right: 6px;
+            margin-top: 8px;
         }
         
         .review-section {
@@ -108,6 +117,25 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .review-section:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #fe2c55, #ff6b00);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+        
+        .review-section:hover:before {
+            opacity: 0.1;
         }
         
         .review-header {
@@ -117,131 +145,116 @@
         }
         
         .review-icon {
-            font-size: 20px;
-            margin-right: 8px;
+            font-size: 22px;
+            margin-right: 10px;
         }
         
         .review-title {
-            font-size: 14px;
+            font-size: 15px;
             color: #666;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .review-text {
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.8;
             color: #333;
-            background: #fafafa;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
             padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #fe2c55;
+            border-radius: 10px;
+            border-left: 4px solid #fe2c55;
         }
         
         .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
         .btn {
-            flex: 1;
             padding: 16px;
             border: none;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(254, 44, 85, 0.3);
+        .btn:active {
+            transform: scale(0.97);
         }
         
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-secondary {
+        .btn-copy {
             background: white;
             color: #fe2c55;
             border: 2px solid #fe2c55;
         }
         
-        .btn-secondary:active {
-            background: #fff5f7;
+        .btn-jump {
+            background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(254, 44, 85, 0.4);
+            font-size: 17px;
+            padding: 18px;
         }
         
-        .method-selector {
-            background: #f5f5f5;
+        .link-display {
+            background: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 20px;
         }
         
-        .method-title {
-            font-size: 14px;
+        .link-label {
+            font-size: 12px;
             color: #666;
-            margin-bottom: 10px;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
         
-        .method-options {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .method-btn {
-            flex: 1;
-            padding: 10px;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+        .link-value {
             font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .method-btn.active {
-            border-color: #fe2c55;
-            background: #fff5f7;
             color: #fe2c55;
-            font-weight: bold;
+            word-break: break-all;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #fee;
+            font-family: monospace;
         }
         
         .tips-box {
-            background: #e8f5e9;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
             border-left: 4px solid #4caf50;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
+            border-radius: 10px;
+            padding: 16px;
         }
         
         .tips-title {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #2e7d32;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         
-        .tips-content {
+        .tips-list {
             font-size: 13px;
-            color: #558b2f;
-            line-height: 1.6;
+            color: #388e3c;
+            line-height: 1.8;
+            padding-left: 20px;
         }
         
-        .tips-content li {
-            margin-bottom: 5px;
-            list-style-position: inside;
+        .tips-list li {
+            margin-bottom: 6px;
         }
         
         .toast {
@@ -249,47 +262,36 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             color: white;
             padding: 20px 40px;
-            border-radius: 12px;
-            font-size: 15px;
+            border-radius: 15px;
+            font-size: 16px;
             z-index: 1000;
             display: none;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .toast-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-        
-        .link-box {
-            background: #fff3e0;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #e65100;
-            word-break: break-all;
-            text-align: center;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -60%);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
         
         .toast.show {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        .toast-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -301,12 +303,12 @@
         </div>
         
         <div class="content">
-            <!-- 商家信息卡片 -->
+            <!-- 商家信息 -->
             <div class="store-card">
                 <div class="store-header">
                     <div class="store-logo">🍔</div>
                     <div class="store-info">
-                        <div class="store-name">麦当劳(北清路二号得来速餐厅店)</div>
+                        <div class="store-name">麦当劳<br>(北清路二号得来速餐厅店)</div>
                         <div class="store-meta">
                             🍴 西式快餐 · 人均 ¥33<br>
                             📍 北京市
@@ -316,65 +318,50 @@
                 <div>
                     <span class="tag">🔥 热销榜</span>
                     <span class="tag">⭐ 高评分</span>
+                    <span class="tag">🚗 得来速</span>
                 </div>
             </div>
             
-            <!-- 评价内容 -->
+            <!-- 评价文案 -->
             <div class="review-section">
                 <div class="review-header">
                     <span class="review-icon">📝</span>
-                    <span class="review-title">评价文案（点击按钮自动复制）</span>
+                    <span class="review-title">评价文案</span>
                 </div>
-                <div class="review-text" id="reviewText">
-麦当劳的汉堡依然是那个熟悉的味道！薯条炸得金黄酥脆，配上番茄酱特别满足。得来速服务很快，不用下车就能取餐，超级方便。环境干净整洁，服务态度也很好，适合快节奏生活的选择！👍
-                </div>
+                <div class="review-text" id="reviewText">麦当劳的汉堡依然是那个熟悉的味道！薯条炸得金黄酥脆，配上番茄酱特别满足。得来速服务很快，不用下车就能取餐，超级方便。环境干净整洁，服务态度也很好，适合快节奏生活的选择！👍</div>
             </div>
             
-            <!-- 跳转方式选择 -->
-            <div class="method-selector">
-                <div class="method-title">🔧 选择跳转方式：</div>
-                <div class="method-options">
-                    <button class="method-btn active" data-method="direct" onclick="selectMethod('direct')">
-                        方式1 (推荐)
-                    </button>
-                    <button class="method-btn" data-method="scheme" onclick="selectMethod('scheme')">
-                        方式2
-                    </button>
-                    <button class="method-btn" data-method="all" onclick="selectMethod('all')">
-                        全部尝试
-                    </button>
-                </div>
-            </div>
-            
-            <!-- 按钮组 -->
+            <!-- 按钮 -->
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="copyReview()">
+                <button class="btn btn-copy" onclick="copyOnly()">
                     <span>📋</span>
-                    <span>仅复制</span>
+                    <span>只复制文案</span>
                 </button>
-                <button class="btn btn-primary" onclick="copyAndJump()">
+                <button class="btn btn-jump" onclick="copyAndOpen()">
                     <span>🚀</span>
-                    <span>复制并跳转</span>
+                    <span>复制并打开抖音商家页面</span>
                 </button>
             </div>
             
-            <!-- 抖音链接 -->
-            <div class="link-box">
-                🔗 抖音链接：https://v.douyin.com/5S7Vseq2UW4/
+            <!-- 链接显示 -->
+            <div class="link-display">
+                <div class="link-label">🔗 商家链接</div>
+                <div class="link-value">https://v.douyin.com/5S7Vseq2UW4/</div>
             </div>
             
             <!-- 操作提示 -->
             <div class="tips-box">
                 <div class="tips-title">
                     <span>💡</span>
-                    <span>使用说明</span>
+                    <span>操作步骤</span>
                 </div>
-                <ul class="tips-content">
-                    <li>如果一种方式无法打开，请尝试其他方式</li>
-                    <li>微信中需要点右上角"在浏览器中打开"</li>
-                    <li>确保已安装抖音App</li>
-                    <li>点击"确定"允许打开抖音</li>
-                </ul>
+                <ol class="tips-list">
+                    <li>点击下方大按钮</li>
+                    <li>自动复制评价文案</li>
+                    <li>弹出"是否打开抖音"，点击<strong>确定/打开</strong></li>
+                    <li>跳转到商家页面后点击"写评价"</li>
+                    <li>粘贴文案并发布</li>
+                </ol>
             </div>
         </div>
     </div>
@@ -382,57 +369,46 @@
     <!-- 提示弹窗 -->
     <div class="toast" id="toast">
         <div class="toast-icon">✓</div>
-        <div id="toastText">复制成功</div>
+        <div id="toastText">操作成功</div>
     </div>
 
     <script>
-        // 全局变量
-        let selectedMethod = 'direct'; // 默认方式
-        
-        const storeConfig = {
-            name: '麦当劳(北清路二号得来速餐厅店)',
-            douyinLink: 'https://v.douyin.com/5S7Vseq2UW4/',
-            douyinScheme: 'snssdk1128://',
-            reviewText: ''
+        // 配置
+        const config = {
+            reviewText: '',
+            douyinShortLink: 'https://v.douyin.com/5S7Vseq2UW4/',  // 抖音短链接
         };
         
         // 初始化
-        storeConfig.reviewText = document.getElementById('reviewText').innerText.trim();
+        window.addEventListener('DOMContentLoaded', function() {
+            config.reviewText = document.getElementById('reviewText').innerText.trim();
+        });
         
-        // 选择跳转方式
-        function selectMethod(method) {
-            selectedMethod = method;
-            
-            // 更新UI
-            document.querySelectorAll('.method-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[data-method="${method}"]`).classList.add('active');
-        }
-        
-        // 仅复制评价
-        function copyReview() {
-            copyToClipboard(storeConfig.reviewText)
+        // 只复制文案
+        function copyOnly() {
+            copyToClipboard(config.reviewText)
                 .then(() => {
-                    showToast('✓ 复制成功！', 2000);
+                    showToast('✅', '文案已复制！', 1500);
                 })
                 .catch(() => {
-                    showToast('❌ 复制失败', 2000);
+                    showToast('❌', '复制失败', 1500);
                 });
         }
         
-        // 复制并跳转
-        function copyAndJump() {
-            copyToClipboard(storeConfig.reviewText)
+        // 复制并打开抖音
+        function copyAndOpen() {
+            // 先复制
+            copyToClipboard(config.reviewText)
                 .then(() => {
-                    showToast('✓ 已复制<br>正在打开抖音...', 1000);
+                    showToast('✅', '文案已复制<br>正在打开抖音...', 1500);
                     
+                    // 延迟后打开抖音
                     setTimeout(() => {
-                        openDouyin(selectedMethod);
-                    }, 1000);
+                        openDouyinStore();
+                    }, 1500);
                 })
                 .catch(() => {
-                    showToast('❌ 复制失败', 2000);
+                    showToast('❌', '复制失败', 1500);
                 });
         }
         
@@ -450,9 +426,9 @@
                     textarea.select();
                     
                     try {
-                        const successful = document.execCommand('copy');
+                        const success = document.execCommand('copy');
                         document.body.removeChild(textarea);
-                        successful ? resolve() : reject();
+                        success ? resolve() : reject();
                     } catch (err) {
                         document.body.removeChild(textarea);
                         reject(err);
@@ -461,62 +437,60 @@
             }
         }
         
-        // 打开抖音（根据选择的方式）
-        function openDouyin(method) {
+        // 打开抖音商家页面（核心函数）
+        function openDouyinStore() {
             const userAgent = navigator.userAgent.toLowerCase();
             const isWeChat = /micromessenger/.test(userAgent);
             
+            // 微信内提示
             if (isWeChat) {
-                alert('📱 检测到微信环境\n\n请点击右上角 ⋯ 按钮\n选择"在浏览器中打开"');
+                alert('📱 请点击右上角菜单\n选择"在浏览器中打开"');
                 return;
             }
             
-            switch(method) {
-                case 'direct':
-                    openMethod1();
-                    break;
-                case 'scheme':
-                    openMethod2();
-                    break;
-                case 'all':
-                    openMethod1();
-                    setTimeout(() => openMethod2(), 500);
-                    break;
-            }
-        }
-        
-        // 方式1: 直接跳转短链接
-        function openMethod1() {
-            console.log('尝试方式1: 直接跳转');
-            window.location.href = storeConfig.douyinLink;
-        }
-        
-        // 方式2: 使用URL Scheme
-        function openMethod2() {
-            console.log('尝试方式2: URL Scheme');
+            // 核心：直接使用抖音短链接
+            // 抖音的短链接本身就包含了商家信息
+            // 点击后会自动跳转到对应的商家POI页面
+            window.location.href = config.douyinShortLink;
             
-            // 先尝试打开URL Scheme
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = storeConfig.douyinScheme;
-            document.body.appendChild(iframe);
+            // 备用方案：使用多种方式尝试唤起
+            const methods = [
+                // 方法1: 直接跳转
+                () => {
+                    window.location.href = config.douyinShortLink;
+                },
+                
+                // 方法2: 使用a标签
+                () => {
+                    const link = document.createElement('a');
+                    link.href = config.douyinShortLink;
+                    link.click();
+                },
+                
+                // 方法3: 使用iframe
+                () => {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = config.douyinShortLink;
+                    document.body.appendChild(iframe);
+                    setTimeout(() => document.body.removeChild(iframe), 1000);
+                }
+            ];
             
-            // 同时尝试直接跳转
-            setTimeout(() => {
-                window.location.href = storeConfig.douyinScheme;
-            }, 100);
-            
-            // 清理iframe
-            setTimeout(() => {
-                document.body.removeChild(iframe);
-            }, 2000);
+            // 依次尝试各种方法（间隔执行）
+            methods.forEach((method, index) => {
+                setTimeout(method, index * 300);
+            });
         }
         
         // 显示提示
-        function showToast(message, duration = 2000) {
+        function showToast(icon, text, duration = 2000) {
             const toast = document.getElementById('toast');
+            const toastIcon = toast.querySelector('.toast-icon');
             const toastText = document.getElementById('toastText');
-            toastText.innerHTML = message;
+            
+            toastIcon.textContent = icon;
+            toastText.innerHTML = text;
             toast.classList.add('show');
             
             setTimeout(() => {
