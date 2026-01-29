@@ -140,6 +140,7 @@
         .btn-group {
             display: flex;
             gap: 10px;
+            margin-bottom: 15px;
         }
         
         .btn {
@@ -175,6 +176,43 @@
         
         .btn-secondary:active {
             background: #fff5f7;
+        }
+        
+        .method-selector {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .method-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .method-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .method-btn {
+            flex: 1;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .method-btn.active {
+            border-color: #fe2c55;
+            background: #fff5f7;
+            color: #fe2c55;
+            font-weight: bold;
         }
         
         .tips-box {
@@ -292,6 +330,22 @@
                 </div>
             </div>
             
+            <!-- 跳转方式选择 -->
+            <div class="method-selector">
+                <div class="method-title">🔧 选择跳转方式：</div>
+                <div class="method-options">
+                    <button class="method-btn active" data-method="direct" onclick="selectMethod('direct')">
+                        方式1 (推荐)
+                    </button>
+                    <button class="method-btn" data-method="scheme" onclick="selectMethod('scheme')">
+                        方式2
+                    </button>
+                    <button class="method-btn" data-method="all" onclick="selectMethod('all')">
+                        全部尝试
+                    </button>
+                </div>
+            </div>
+            
             <!-- 按钮组 -->
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="copyReview()">
@@ -300,7 +354,7 @@
                 </button>
                 <button class="btn btn-primary" onclick="copyAndJump()">
                     <span>🚀</span>
-                    <span>复制并跳转抖音</span>
+                    <span>复制并跳转</span>
                 </button>
             </div>
             
@@ -313,14 +367,13 @@
             <div class="tips-box">
                 <div class="tips-title">
                     <span>💡</span>
-                    <span>操作步骤</span>
+                    <span>使用说明</span>
                 </div>
                 <ul class="tips-content">
-                    <li>点击"复制并跳转抖音"按钮</li>
-                    <li>自动跳转到麦当劳商家页面</li>
-                    <li>点击"写评价"按钮</li>
-                    <li>长按粘贴复制的文案</li>
-                    <li>选择星级并发布评价</li>
+                    <li>如果一种方式无法打开，请尝试其他方式</li>
+                    <li>微信中需要点右上角"在浏览器中打开"</li>
+                    <li>确保已安装抖音App</li>
+                    <li>点击"确定"允许打开抖音</li>
                 </ul>
             </div>
         </div>
@@ -333,12 +386,29 @@
     </div>
 
     <script>
-        // 商家配置
+        // 全局变量
+        let selectedMethod = 'direct'; // 默认方式
+        
         const storeConfig = {
             name: '麦当劳(北清路二号得来速餐厅店)',
             douyinLink: 'https://v.douyin.com/5S7Vseq2UW4/',
-            reviewText: document.getElementById('reviewText').innerText.trim()
+            douyinScheme: 'snssdk1128://',
+            reviewText: ''
         };
+        
+        // 初始化
+        storeConfig.reviewText = document.getElementById('reviewText').innerText.trim();
+        
+        // 选择跳转方式
+        function selectMethod(method) {
+            selectedMethod = method;
+            
+            // 更新UI
+            document.querySelectorAll('.method-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-method="${method}"]`).classList.add('active');
+        }
         
         // 仅复制评价
         function copyReview() {
@@ -347,7 +417,7 @@
                     showToast('✓ 复制成功！', 2000);
                 })
                 .catch(() => {
-                    showToast('❌ 复制失败，请手动复制', 2000);
+                    showToast('❌ 复制失败', 2000);
                 });
         }
         
@@ -355,12 +425,11 @@
         function copyAndJump() {
             copyToClipboard(storeConfig.reviewText)
                 .then(() => {
-                    showToast('✓ 已复制<br>正在跳转抖音...', 1500);
+                    showToast('✓ 已复制<br>正在打开抖音...', 1000);
                     
-                    // 延迟后跳转
                     setTimeout(() => {
-                        openDouyin();
-                    }, 1500);
+                        openDouyin(selectedMethod);
+                    }, 1000);
                 })
                 .catch(() => {
                     showToast('❌ 复制失败', 2000);
@@ -369,29 +438,21 @@
         
         // 复制到剪贴板
         function copyToClipboard(text) {
-            // 优先使用现代API
             if (navigator.clipboard && window.isSecureContext) {
                 return navigator.clipboard.writeText(text);
             } else {
-                // 降级方案
                 return new Promise((resolve, reject) => {
                     const textarea = document.createElement('textarea');
                     textarea.value = text;
                     textarea.style.position = 'fixed';
-                    textarea.style.left = '-999999px';
-                    textarea.style.top = '-999999px';
+                    textarea.style.opacity = '0';
                     document.body.appendChild(textarea);
-                    textarea.focus();
                     textarea.select();
                     
                     try {
                         const successful = document.execCommand('copy');
                         document.body.removeChild(textarea);
-                        if (successful) {
-                            resolve();
-                        } else {
-                            reject(new Error('Copy failed'));
-                        }
+                        successful ? resolve() : reject();
                     } catch (err) {
                         document.body.removeChild(textarea);
                         reject(err);
@@ -400,38 +461,55 @@
             }
         }
         
-        // 打开抖音
-        function openDouyin() {
-            const douyinLink = storeConfig.douyinLink;
+        // 打开抖音（根据选择的方式）
+        function openDouyin(method) {
             const userAgent = navigator.userAgent.toLowerCase();
             const isWeChat = /micromessenger/.test(userAgent);
             
-            // 如果在微信中，提示用户在浏览器中打开
             if (isWeChat) {
-                alert('请点击右上角 ⋯ 选择"在浏览器中打开"以跳转到抖音App');
+                alert('📱 检测到微信环境\n\n请点击右上角 ⋯ 按钮\n选择"在浏览器中打开"');
                 return;
             }
             
-            // 检测设备
-            const isIOS = /iphone|ipad|ipod/.test(userAgent);
-            const isAndroid = /android/.test(userAgent);
+            switch(method) {
+                case 'direct':
+                    openMethod1();
+                    break;
+                case 'scheme':
+                    openMethod2();
+                    break;
+                case 'all':
+                    openMethod1();
+                    setTimeout(() => openMethod2(), 500);
+                    break;
+            }
+        }
+        
+        // 方式1: 直接跳转短链接
+        function openMethod1() {
+            console.log('尝试方式1: 直接跳转');
+            window.location.href = storeConfig.douyinLink;
+        }
+        
+        // 方式2: 使用URL Scheme
+        function openMethod2() {
+            console.log('尝试方式2: URL Scheme');
             
-            // 尝试打开抖音短链接（会自动唤起App）
-            window.location.href = douyinLink;
+            // 先尝试打开URL Scheme
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = storeConfig.douyinScheme;
+            document.body.appendChild(iframe);
             
-            // 备用方案：如果2秒后还在页面，说明可能没有安装抖音
+            // 同时尝试直接跳转
             setTimeout(() => {
-                const confirmDownload = confirm('未检测到抖音App，是否前往下载？');
-                if (confirmDownload) {
-                    if (isIOS) {
-                        window.location.href = 'https://apps.apple.com/cn/app/id1142110895';
-                    } else if (isAndroid) {
-                        window.location.href = 'https://www.douyin.com/';
-                    } else {
-                        window.location.href = 'https://www.douyin.com/';
-                    }
-                }
-            }, 2500);
+                window.location.href = storeConfig.douyinScheme;
+            }, 100);
+            
+            // 清理iframe
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 2000);
         }
         
         // 显示提示
@@ -445,11 +523,6 @@
                 toast.classList.remove('show');
             }, duration);
         }
-        
-        // 阻止页面在微信中被分享
-        document.addEventListener('WeixinJSBridgeReady', function() {
-            WeixinJSBridge.call('hideOptionMenu');
-        });
     </script>
 </body>
 </html>
