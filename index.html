@@ -1,60 +1,138 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>抖音商家直跳</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{font-family:Arial;background:#f5f5f5;padding:20px}
-.box{max-width:500px;margin:auto;background:#fff;padding:20px;border-radius:12px}
-input,button{width:100%;padding:12px;margin:10px 0;font-size:16px}
-button{background:#fe2c55;color:#fff;border:none;border-radius:6px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抖音商家直跳</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #fe2c55;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #fe2c55, #ff0050);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .tips {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>抖音商家直跳</h1>
+        <input type="text" id="input" placeholder="粘贴链接 或 POI ID（如 7123456789012345678）">
+        <button id="btn" disabled>打开抖音商家页</button>
+        <div class="tips">
+            支持格式：<br>
+            • 纯 POI ID（数字）<br>
+            • https://www.douyin.com/poi/xxxxxxxx<br>
+            • v.douyin.com/xxxxxx（短链需手动提取 ID）<br><br>
+            微信内请先“在浏览器中打开”
+        </div>
+    </div>
 
-<div class="box">
-<h2>抖音商家评价直跳</h2>
+    <script>
+        const input = document.getElementById('input');
+        const btn = document.getElementById('btn');
+        let poiId = null;
 
-<textarea id="review" rows="4">这家店环境不错，服务也很好，推荐！</textarea>
+        // 实时解析输入
+        input.addEventListener('input', () => {
+            const val = input.value.trim();
+            poiId = null;
 
-<input id="poiInput" placeholder="粘贴POI ID或抖音商家链接">
+            if (/^\d{15,20}$/.test(val)) {
+                poiId = val;
+            } else {
+                const match = val.match(/\/poi\/(\d+)/) || val.match(/poi_id=(\d+)/);
+                if (match) poiId = match[1];
+            }
 
-<button onclick="parsePOI()">解析 POI</button>
-<button id="openBtn" onclick="copyAndOpen()" disabled>复制并打开抖音商家页</button>
-</div>
+            btn.disabled = !poiId;
+        });
 
-<script>
-let poiId = null;
+        // 点击跳转
+        btn.addEventListener('click', () => {
+            if (!poiId) return;
 
-function parsePOI(){
-    const text = document.getElementById('poiInput').value;
-    const match = text.match(/poi_id=(\d{15,20})|\/poi\/(\d{15,20})|^(\d{15,20})$/);
-    if(match){
-        poiId = match[1] || match[2] || match[3];
-        document.getElementById('openBtn').disabled = false;
-        alert("识别成功 POI ID: " + poiId);
-    }else{
-        alert("未识别到 POI ID");
-    }
-}
+            const ua = navigator.userAgent.toLowerCase();
+            if (/micromessenger/.test(ua)) {
+                alert('微信环境限制跳转\n请点击右上角 ... → 在浏览器中打开');
+                return;
+            }
 
-function copyAndOpen(){
-    const review = document.getElementById('review').value;
-    navigator.clipboard.writeText(review).then(()=>{
-        openDouyin();
-    });
-}
+            const scheme = `snssdk1128://poi/detail?id=${poiId}&from=webview&refer=web`;
+            const fallback = `https://www.douyin.com/poi/${poiId}`;
 
-function openDouyin(){
-    if(/micromessenger/i.test(navigator.userAgent)){
-        alert("请点击右上角 ··· 选择 在浏览器中打开");
-        return;
-    }
-    const url = `https://www.douyin.com/link/?target=poi&poi_id=${poiId}`;
-    window.location.href = url;
-}
-</script>
+            // 尝试唤起 App
+            window.location.href = scheme;
 
+            // 隐藏 iframe 辅助（部分浏览器更稳）
+            setTimeout(() => {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = scheme;
+                document.body.appendChild(iframe);
+                setTimeout(() => document.body.removeChild(iframe), 1000);
+            }, 300);
+
+            // 2秒后若未跳转成功，fallback 到网页
+            setTimeout(() => {
+                if (!document.hidden) {  // App 没接管页面
+                    window.location.href = fallback;
+                }
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
