@@ -1,543 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抖音商家评价 - App直跳</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 500px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
-            color: white;
-            padding: 25px 20px;
-            text-align: center;
-        }
-        
-        .header-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        
-        .header-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .content {
-            padding: 25px;
-        }
-        
-        .store-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .store-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .store-logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #FFC72C 0%, #FFAA00 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 35px;
-            margin-right: 15px;
-            box-shadow: 0 4px 15px rgba(255, 199, 44, 0.3);
-        }
-        
-        .store-info {
-            flex: 1;
-        }
-        
-        .store-name {
-            font-size: 17px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-        
-        .store-meta {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .tag {
-            display: inline-block;
-            background: #fff3e0;
-            color: #ff6b00;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-right: 6px;
-            margin-top: 8px;
-        }
-        
-        .review-section {
-            background: white;
-            border: 2px dashed #e0e0e0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .review-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        
-        .review-icon {
-            font-size: 22px;
-            margin-right: 10px;
-        }
-        
-        .review-title {
-            font-size: 15px;
-            color: #666;
-            font-weight: 600;
-        }
-        
-        .review-text {
-            font-size: 15px;
-            line-height: 1.8;
-            color: #333;
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #fe2c55;
-        }
-        
-        .poi-input-section {
-            background: #f0f7ff;
-            border: 2px solid #2196f3;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .poi-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #1565c0;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .poi-desc {
-            font-size: 13px;
-            color: #1976d2;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .input-wrapper {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .input-box {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #90caf9;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: monospace;
-        }
-        
-        .input-box:focus {
-            outline: none;
-            border-color: #2196f3;
-        }
-        
-        .btn-parse {
-            padding: 12px 20px;
-            background: #2196f3;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .poi-example {
-            font-size: 12px;
-            color: #666;
-            margin-top: 8px;
-        }
-        
-        .btn-group {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .btn:active {
-            transform: scale(0.97);
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .btn-copy {
-            background: white;
-            color: #fe2c55;
-            border: 2px solid #fe2c55;
-        }
-        
-        .btn-app {
-            background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
-            color: white;
-            box-shadow: 0 6px 20px rgba(254, 44, 85, 0.4);
-            font-size: 17px;
-            padding: 18px;
-        }
-        
-        .btn-web {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-            color: white;
-        }
-        
-        .tips-box {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
-            border-radius: 10px;
-            padding: 16px;
-            font-size: 13px;
-            color: #e65100;
-            line-height: 1.7;
-        }
-        
-        .tips-box strong {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .toast {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 25px 45px;
-            border-radius: 15px;
-            font-size: 16px;
-            z-index: 1000;
-            display: none;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            max-width: 80%;
-        }
-        
-        .toast.show {
-            display: block;
-            animation: popIn 0.3s;
-        }
-        
-        @keyframes popIn {
-            from { opacity: 0; transform: translate(-50%, -60%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
-        }
-        
-        .toast-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>抖音商家直跳</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px}
+.box{max-width:500px;margin:auto;background:#fff;padding:20px;border-radius:12px}
+input,button{width:100%;padding:12px;margin:10px 0;font-size:16px}
+button{background:#fe2c55;color:#fff;border:none;border-radius:6px}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-icon">📱</div>
-            <div class="header-title">抖音App商家评价</div>
-        </div>
-        
-        <div class="content">
-            <!-- 商家信息 -->
-            <div class="store-card">
-                <div class="store-header">
-                    <div class="store-logo">🍔</div>
-                    <div class="store-info">
-                        <div class="store-name">麦当劳<br>(北清路二号得来速餐厅店)</div>
-                        <div class="store-meta">
-                            🍴 西式快餐 · 人均 ¥33<br>
-                            📍 北京市
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <span class="tag">🔥 热销榜</span>
-                    <span class="tag">⭐ 高评分</span>
-                </div>
-            </div>
-            
-            <!-- POI ID输入区 -->
-            <div class="poi-input-section">
-                <div class="poi-title">
-                    <span>🔧</span>
-                    <span>获取商家POI ID</span>
-                </div>
-                <div class="poi-desc">
-                    要直接跳转到App商家页面，需要先获取POI ID。<br>
-                    <strong>方法1：</strong>在电脑上打开短链接 https://v.douyin.com/5S7Vseq2UW4/ ，从地址栏复制POI ID<br>
-                    <strong>方法2：</strong>在抖音App中分享商家，选择"复制链接"，然后粘贴到下方
-                </div>
-                <div class="input-wrapper">
-                    <input type="text" 
-                           class="input-box" 
-                           id="poiInput" 
-                           placeholder="输入完整链接或POI ID">
-                    <button class="btn-parse" onclick="parsePOI()">解析</button>
-                </div>
-                <div class="poi-example">
-                    示例: 7123456789012345678 或 https://www.douyin.com/poi/7123456789012345678
-                </div>
-            </div>
-            
-            <!-- 评价文案 -->
-            <div class="review-section">
-                <div class="review-header">
-                    <span class="review-icon">📝</span>
-                    <span class="review-title">评价文案</span>
-                </div>
-                <div class="review-text" id="reviewText">麦当劳的汉堡依然是那个熟悉的味道！薯条炸得金黄酥脆，配上番茄酱特别满足。得来速服务很快，不用下车就能取餐，超级方便。环境干净整洁，服务态度也很好，适合快节奏生活的选择！👍</div>
-            </div>
-            
-            <!-- 按钮 -->
-            <div class="btn-group">
-                <button class="btn btn-copy" onclick="copyOnly()">
-                    <span>📋</span>
-                    <span>只复制文案</span>
-                </button>
-                <button class="btn btn-app" id="btnOpenApp" onclick="copyAndOpenApp()" disabled>
-                    <span>📱</span>
-                    <span>复制并打开抖音App商家页</span>
-                </button>
-                <button class="btn btn-web" onclick="copyAndOpenWeb()">
-                    <span>🌐</span>
-                    <span>复制并打开网页版（备用）</span>
-                </button>
-            </div>
-            
-            <!-- 提示 -->
-            <div class="tips-box">
-                <strong>⚠️ 重要说明：</strong>
-                1. 输入POI ID后才能使用"打开App"功能<br>
-                2. 在微信中需要"在浏览器中打开"<br>
-                3. 如果App跳转失败，请使用"打开网页版"
-            </div>
-        </div>
-    </div>
-    
-    <!-- 提示弹窗 -->
-    <div class="toast" id="toast">
-        <div class="toast-icon">✓</div>
-        <div id="toastText">操作成功</div>
-    </div>
 
-    <script>
-        // 配置
-        let config = {
-            reviewText: '',
-            poiId: null,  // 需要从用户输入中获取
-            douyinShortLink: 'https://v.douyin.com/5S7Vseq2UW4/',
-        };
-        
-        // 初始化
-        window.addEventListener('DOMContentLoaded', function() {
-            config.reviewText = document.getElementById('reviewText').innerText.trim();
-        });
-        
-        // 解析POI ID
-        function parsePOI() {
-            const input = document.getElementById('poiInput').value.trim();
-            
-            if (!input) {
-                showToast('❌', '请输入链接或POI ID', 2000);
-                return;
-            }
-            
-            let poiId = null;
-            
-            // 尝试各种格式
-            // 格式1: 纯数字POI ID
-            if (/^\d{15,20}$/.test(input)) {
-                poiId = input;
-            }
-            // 格式2: https://www.douyin.com/poi/7123456789
-            else {
-                const match1 = input.match(/\/poi\/(\d{15,20})/);
-                if (match1) poiId = match1[1];
-            }
-            // 格式3: snssdk1128://poi/detail?poi_id=7123456789
-            if (!poiId) {
-                const match2 = input.match(/poi_id=(\d{15,20})/);
-                if (match2) poiId = match2[1];
-            }
-            
-            if (poiId) {
-                config.poiId = poiId;
-                document.getElementById('btnOpenApp').disabled = false;
-                showToast('✅', `POI ID: ${poiId}<br>已启用App跳转功能`, 2500);
-            } else {
-                showToast('❌', '无法识别POI ID<br>请检查输入格式', 2500);
-            }
-        }
-        
-        // 只复制文案
-        function copyOnly() {
-            copyToClipboard(config.reviewText)
-                .then(() => showToast('✅', '文案已复制！', 2000))
-                .catch(() => showToast('❌', '复制失败', 2000));
-        }
-        
-        // 复制并打开App
-        function copyAndOpenApp() {
-            if (!config.poiId) {
-                showToast('❌', '请先输入POI ID', 2000);
-                return;
-            }
-            
-            copyToClipboard(config.reviewText)
-                .then(() => {
-                    showToast('✅', '文案已复制<br>正在打开抖音App...', 1500);
-                    setTimeout(() => openApp(), 1500);
-                })
-                .catch(() => showToast('❌', '复制失败', 2000));
-        }
-        
-        // 复制并打开网页版
-        function copyAndOpenWeb() {
-            copyToClipboard(config.reviewText)
-                .then(() => {
-                    showToast('✅', '文案已复制<br>正在打开网页...', 1500);
-                    setTimeout(() => {
-                        window.location.href = config.douyinShortLink;
-                    }, 1500);
-                })
-                .catch(() => showToast('❌', '复制失败', 2000));
-        }
-        
-        // 打开抖音App（使用POI ID）
-        function openApp() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isWeChat = /micromessenger/.test(userAgent);
-            
-            if (isWeChat) {
-                alert('⚠️ 微信环境\n\n请点击右上角"···"\n选择"在浏览器中打开"');
-                return;
-            }
-            
-            // 使用POI ID构建URL Scheme
-            const appScheme = `snssdk1128://poi/detail?poi_id=${config.poiId}`;
-            const webUrl = `https://www.douyin.com/poi/${config.poiId}`;
-            
-            console.log('正在打开:', appScheme);
-            
-            // 方法1: 直接跳转URL Scheme
-            window.location.href = appScheme;
-            
-            // 方法2: iframe备用
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = appScheme;
-                document.body.appendChild(iframe);
-                setTimeout(() => document.body.removeChild(iframe), 1000);
-            }, 300);
-            
-            // 方法3: 如果App没打开，2秒后跳转网页版
-            setTimeout(() => {
-                window.location.href = webUrl;
-            }, 2000);
-        }
-        
-        // 复制到剪贴板
-        function copyToClipboard(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                return navigator.clipboard.writeText(text);
-            } else {
-                return new Promise((resolve, reject) => {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    
-                    try {
-                        const success = document.execCommand('copy');
-                        document.body.removeChild(textarea);
-                        success ? resolve() : reject();
-                    } catch (err) {
-                        document.body.removeChild(textarea);
-                        reject(err);
-                    }
-                });
-            }
-        }
-        
-        // 显示提示
-        function showToast(icon, text, duration = 2000) {
-            const toast = document.getElementById('toast');
-            toast.querySelector('.toast-icon').textContent = icon;
-            document.getElementById('toastText').innerHTML = text;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), duration);
-        }
-    </script>
+<div class="box">
+<h2>抖音商家评价直跳</h2>
+
+<textarea id="review" rows="4">这家店环境不错，服务也很好，推荐！</textarea>
+
+<input id="poiInput" placeholder="粘贴POI ID或抖音商家链接">
+
+<button onclick="parsePOI()">解析 POI</button>
+<button id="openBtn" onclick="copyAndOpen()" disabled>复制并打开抖音商家页</button>
+</div>
+
+<script>
+let poiId = null;
+
+function parsePOI(){
+    const text = document.getElementById('poiInput').value;
+    const match = text.match(/poi_id=(\d{15,20})|\/poi\/(\d{15,20})|^(\d{15,20})$/);
+    if(match){
+        poiId = match[1] || match[2] || match[3];
+        document.getElementById('openBtn').disabled = false;
+        alert("识别成功 POI ID: " + poiId);
+    }else{
+        alert("未识别到 POI ID");
+    }
+}
+
+function copyAndOpen(){
+    const review = document.getElementById('review').value;
+    navigator.clipboard.writeText(review).then(()=>{
+        openDouyin();
+    });
+}
+
+function openDouyin(){
+    if(/micromessenger/i.test(navigator.userAgent)){
+        alert("请点击右上角 ··· 选择 在浏览器中打开");
+        return;
+    }
+    const url = `https://www.douyin.com/link/?target=poi&poi_id=${poiId}`;
+    window.location.href = url;
+}
+</script>
+
 </body>
 </html>
