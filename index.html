@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>麦当劳商家评价</title>
+    <title>抖音商家评价 - App直跳</title>
     <style>
         * {
             margin: 0;
@@ -37,12 +37,6 @@
         .header-icon {
             font-size: 50px;
             margin-bottom: 10px;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
         
         .header-title {
@@ -55,11 +49,10 @@
         }
         
         .store-card {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            background: #f8f9fa;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 2px solid #f0f0f0;
         }
         
         .store-header {
@@ -101,7 +94,7 @@
         
         .tag {
             display: inline-block;
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            background: #fff3e0;
             color: #ff6b00;
             padding: 4px 10px;
             border-radius: 12px;
@@ -117,25 +110,6 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .review-section:before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #fe2c55, #ff6b00);
-            border-radius: 12px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
-        }
-        
-        .review-section:hover:before {
-            opacity: 0.1;
         }
         
         .review-header {
@@ -159,10 +133,71 @@
             font-size: 15px;
             line-height: 1.8;
             color: #333;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            background: #fafafa;
             padding: 15px;
             border-radius: 10px;
             border-left: 4px solid #fe2c55;
+        }
+        
+        .poi-input-section {
+            background: #f0f7ff;
+            border: 2px solid #2196f3;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .poi-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .poi-desc {
+            font-size: 13px;
+            color: #1976d2;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .input-box {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #90caf9;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        
+        .input-box:focus {
+            outline: none;
+            border-color: #2196f3;
+        }
+        
+        .btn-parse {
+            padding: 12px 20px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .poi-example {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
         }
         
         .btn-group {
@@ -190,13 +225,18 @@
             transform: scale(0.97);
         }
         
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         .btn-copy {
             background: white;
             color: #fe2c55;
             border: 2px solid #fe2c55;
         }
         
-        .btn-jump {
+        .btn-app {
             background: linear-gradient(135deg, #fe2c55 0%, #ff0050 100%);
             color: white;
             box-shadow: 0 6px 20px rgba(254, 44, 85, 0.4);
@@ -204,57 +244,25 @@
             padding: 18px;
         }
         
-        .link-display {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .link-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .link-value {
-            font-size: 13px;
-            color: #fe2c55;
-            word-break: break-all;
-            background: white;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #fee;
-            font-family: monospace;
+        .btn-web {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
         }
         
         .tips-box {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            border-left: 4px solid #4caf50;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
             border-radius: 10px;
             padding: 16px;
-        }
-        
-        .tips-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #2e7d32;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .tips-list {
             font-size: 13px;
-            color: #388e3c;
-            line-height: 1.8;
-            padding-left: 20px;
+            color: #e65100;
+            line-height: 1.7;
         }
         
-        .tips-list li {
-            margin-bottom: 6px;
+        .tips-box strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
         
         .toast {
@@ -264,29 +272,24 @@
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 20px 40px;
+            padding: 25px 45px;
             border-radius: 15px;
             font-size: 16px;
             z-index: 1000;
             display: none;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 80%;
         }
         
         .toast.show {
             display: block;
-            animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: popIn 0.3s;
         }
         
         @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
         
         .toast-icon {
@@ -298,8 +301,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-icon">🎬</div>
-            <div class="header-title">抖音商家评价任务</div>
+            <div class="header-icon">📱</div>
+            <div class="header-title">抖音App商家评价</div>
         </div>
         
         <div class="content">
@@ -318,7 +321,29 @@
                 <div>
                     <span class="tag">🔥 热销榜</span>
                     <span class="tag">⭐ 高评分</span>
-                    <span class="tag">🚗 得来速</span>
+                </div>
+            </div>
+            
+            <!-- POI ID输入区 -->
+            <div class="poi-input-section">
+                <div class="poi-title">
+                    <span>🔧</span>
+                    <span>获取商家POI ID</span>
+                </div>
+                <div class="poi-desc">
+                    要直接跳转到App商家页面，需要先获取POI ID。<br>
+                    <strong>方法1：</strong>在电脑上打开短链接 https://v.douyin.com/5S7Vseq2UW4/ ，从地址栏复制POI ID<br>
+                    <strong>方法2：</strong>在抖音App中分享商家，选择"复制链接"，然后粘贴到下方
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" 
+                           class="input-box" 
+                           id="poiInput" 
+                           placeholder="输入完整链接或POI ID">
+                    <button class="btn-parse" onclick="parsePOI()">解析</button>
+                </div>
+                <div class="poi-example">
+                    示例: 7123456789012345678 或 https://www.douyin.com/poi/7123456789012345678
                 </div>
             </div>
             
@@ -337,31 +362,22 @@
                     <span>📋</span>
                     <span>只复制文案</span>
                 </button>
-                <button class="btn btn-jump" onclick="copyAndOpen()">
-                    <span>🚀</span>
-                    <span>复制并打开抖音商家页面</span>
+                <button class="btn btn-app" id="btnOpenApp" onclick="copyAndOpenApp()" disabled>
+                    <span>📱</span>
+                    <span>复制并打开抖音App商家页</span>
+                </button>
+                <button class="btn btn-web" onclick="copyAndOpenWeb()">
+                    <span>🌐</span>
+                    <span>复制并打开网页版（备用）</span>
                 </button>
             </div>
             
-            <!-- 链接显示 -->
-            <div class="link-display">
-                <div class="link-label">🔗 商家链接</div>
-                <div class="link-value">https://v.douyin.com/5S7Vseq2UW4/</div>
-            </div>
-            
-            <!-- 操作提示 -->
+            <!-- 提示 -->
             <div class="tips-box">
-                <div class="tips-title">
-                    <span>💡</span>
-                    <span>操作步骤</span>
-                </div>
-                <ol class="tips-list">
-                    <li>点击下方大按钮</li>
-                    <li>自动复制评价文案</li>
-                    <li>弹出"是否打开抖音"，点击<strong>确定/打开</strong></li>
-                    <li>跳转到商家页面后点击"写评价"</li>
-                    <li>粘贴文案并发布</li>
-                </ol>
+                <strong>⚠️ 重要说明：</strong>
+                1. 输入POI ID后才能使用"打开App"功能<br>
+                2. 在微信中需要"在浏览器中打开"<br>
+                3. 如果App跳转失败，请使用"打开网页版"
             </div>
         </div>
     </div>
@@ -374,9 +390,10 @@
 
     <script>
         // 配置
-        const config = {
+        let config = {
             reviewText: '',
-            douyinShortLink: 'https://v.douyin.com/5S7Vseq2UW4/',  // 抖音短链接
+            poiId: null,  // 需要从用户输入中获取
+            douyinShortLink: 'https://v.douyin.com/5S7Vseq2UW4/',
         };
         
         // 初始化
@@ -384,32 +401,108 @@
             config.reviewText = document.getElementById('reviewText').innerText.trim();
         });
         
+        // 解析POI ID
+        function parsePOI() {
+            const input = document.getElementById('poiInput').value.trim();
+            
+            if (!input) {
+                showToast('❌', '请输入链接或POI ID', 2000);
+                return;
+            }
+            
+            let poiId = null;
+            
+            // 尝试各种格式
+            // 格式1: 纯数字POI ID
+            if (/^\d{15,20}$/.test(input)) {
+                poiId = input;
+            }
+            // 格式2: https://www.douyin.com/poi/7123456789
+            else {
+                const match1 = input.match(/\/poi\/(\d{15,20})/);
+                if (match1) poiId = match1[1];
+            }
+            // 格式3: snssdk1128://poi/detail?poi_id=7123456789
+            if (!poiId) {
+                const match2 = input.match(/poi_id=(\d{15,20})/);
+                if (match2) poiId = match2[1];
+            }
+            
+            if (poiId) {
+                config.poiId = poiId;
+                document.getElementById('btnOpenApp').disabled = false;
+                showToast('✅', `POI ID: ${poiId}<br>已启用App跳转功能`, 2500);
+            } else {
+                showToast('❌', '无法识别POI ID<br>请检查输入格式', 2500);
+            }
+        }
+        
         // 只复制文案
         function copyOnly() {
             copyToClipboard(config.reviewText)
-                .then(() => {
-                    showToast('✅', '文案已复制！', 1500);
-                })
-                .catch(() => {
-                    showToast('❌', '复制失败', 1500);
-                });
+                .then(() => showToast('✅', '文案已复制！', 2000))
+                .catch(() => showToast('❌', '复制失败', 2000));
         }
         
-        // 复制并打开抖音
-        function copyAndOpen() {
-            // 先复制
+        // 复制并打开App
+        function copyAndOpenApp() {
+            if (!config.poiId) {
+                showToast('❌', '请先输入POI ID', 2000);
+                return;
+            }
+            
             copyToClipboard(config.reviewText)
                 .then(() => {
-                    showToast('✅', '文案已复制<br>正在打开抖音...', 1500);
-                    
-                    // 延迟后打开抖音
+                    showToast('✅', '文案已复制<br>正在打开抖音App...', 1500);
+                    setTimeout(() => openApp(), 1500);
+                })
+                .catch(() => showToast('❌', '复制失败', 2000));
+        }
+        
+        // 复制并打开网页版
+        function copyAndOpenWeb() {
+            copyToClipboard(config.reviewText)
+                .then(() => {
+                    showToast('✅', '文案已复制<br>正在打开网页...', 1500);
                     setTimeout(() => {
-                        openDouyinStore();
+                        window.location.href = config.douyinShortLink;
                     }, 1500);
                 })
-                .catch(() => {
-                    showToast('❌', '复制失败', 1500);
-                });
+                .catch(() => showToast('❌', '复制失败', 2000));
+        }
+        
+        // 打开抖音App（使用POI ID）
+        function openApp() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isWeChat = /micromessenger/.test(userAgent);
+            
+            if (isWeChat) {
+                alert('⚠️ 微信环境\n\n请点击右上角"···"\n选择"在浏览器中打开"');
+                return;
+            }
+            
+            // 使用POI ID构建URL Scheme
+            const appScheme = `snssdk1128://poi/detail?poi_id=${config.poiId}`;
+            const webUrl = `https://www.douyin.com/poi/${config.poiId}`;
+            
+            console.log('正在打开:', appScheme);
+            
+            // 方法1: 直接跳转URL Scheme
+            window.location.href = appScheme;
+            
+            // 方法2: iframe备用
+            setTimeout(() => {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = appScheme;
+                document.body.appendChild(iframe);
+                setTimeout(() => document.body.removeChild(iframe), 1000);
+            }, 300);
+            
+            // 方法3: 如果App没打开，2秒后跳转网页版
+            setTimeout(() => {
+                window.location.href = webUrl;
+            }, 2000);
         }
         
         // 复制到剪贴板
@@ -437,65 +530,13 @@
             }
         }
         
-        // 打开抖音商家页面（核心函数）
-        function openDouyinStore() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            const isWeChat = /micromessenger/.test(userAgent);
-            
-            // 微信内提示
-            if (isWeChat) {
-                alert('📱 请点击右上角菜单\n选择"在浏览器中打开"');
-                return;
-            }
-            
-            // 核心：直接使用抖音短链接
-            // 抖音的短链接本身就包含了商家信息
-            // 点击后会自动跳转到对应的商家POI页面
-            window.location.href = config.douyinShortLink;
-            
-            // 备用方案：使用多种方式尝试唤起
-            const methods = [
-                // 方法1: 直接跳转
-                () => {
-                    window.location.href = config.douyinShortLink;
-                },
-                
-                // 方法2: 使用a标签
-                () => {
-                    const link = document.createElement('a');
-                    link.href = config.douyinShortLink;
-                    link.click();
-                },
-                
-                // 方法3: 使用iframe
-                () => {
-                    const iframe = document.createElement('iframe');
-                    iframe.style.display = 'none';
-                    iframe.src = config.douyinShortLink;
-                    document.body.appendChild(iframe);
-                    setTimeout(() => document.body.removeChild(iframe), 1000);
-                }
-            ];
-            
-            // 依次尝试各种方法（间隔执行）
-            methods.forEach((method, index) => {
-                setTimeout(method, index * 300);
-            });
-        }
-        
         // 显示提示
         function showToast(icon, text, duration = 2000) {
             const toast = document.getElementById('toast');
-            const toastIcon = toast.querySelector('.toast-icon');
-            const toastText = document.getElementById('toastText');
-            
-            toastIcon.textContent = icon;
-            toastText.innerHTML = text;
+            toast.querySelector('.toast-icon').textContent = icon;
+            document.getElementById('toastText').innerHTML = text;
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
+            setTimeout(() => toast.classList.remove('show'), duration);
         }
     </script>
 </body>
