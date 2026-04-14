@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/biohelix/">
     <title>bioHelix</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/mgrid.css">
-    <link rel="stylesheet" href="/css/modal.css">
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/ai.css">
-    <link rel="stylesheet" href="/css/onedark.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/toastify.min.css">
-    <script src="/apps/mole-3d/js/SHA256.js"></script>
-    <script type="text/javascript" src="/js/toastify.js"></script>
-    <script src="/js/message.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/mgrid.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/ai.css">
+    <link rel="stylesheet" href="./css/onedark.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/toastify.min.css">
+    <script src="./apps/mole-3d/js/SHA256.js"></script>
+    <script type="text/javascript" src="./js/toastify.js"></script>
+    <script src="./js/message.js"></script>
     <script>
         window.unitMain = new MessageBus();
         window.unit2d = new MessageBus();
@@ -30,7 +29,7 @@
         <div class="name-modal-container">
             <div class="name-modal-header">
                 <h3 class="name-modal-title">请输入分子名称</h3>
-                <img src="/images/cancel.svg" alt="cancel-icon" class="name-modal-cancel">
+                <img src="./images/cancel.svg" alt="cancel-icon" class="name-modal-cancel">
             </div>
             <div class="name-modal-input">
                 <input type="text" placeholder="请输入分子名称">
@@ -43,7 +42,7 @@
     <!-- 登录 -->
     <div class="login-modal-overlay modal-overlay">
         <div class="login-modal-container">
-            <img src="/images/cancel.svg" alt="cancel-icon" class="login-modal-cancel">
+            <img src="./images/cancel.svg" alt="cancel-icon" class="login-modal-cancel">
             <div class="logo-section">
             </div>
             <div class="login-section">
@@ -114,9 +113,9 @@
         </div>
     </div>
     <header class="mobile-header">
-        <img src="/images/menu.svg" alt="menu" id="menu">
-        <img src="/images/logo.svg" alt="logo" id="logo">
-        <img src="/images/mole-property.svg" alt="mole-property" id="mole-property">
+        <img src="./images/menu.svg" alt="menu" id="menu">
+        <img src="./images/logo.svg" alt="logo" id="logo">
+        <img src="./images/mole-property.svg" alt="mole-property" id="mole-property">
     </header>
     <!-- 主应用容器 -->
     <main class="app-container">
@@ -144,7 +143,7 @@
                 </div>
             </section>
             <section class="logo-container">
-                <img src="/images/logo.svg" alt="logo" id="logo">
+                <img src="./images/logo.svg" alt="logo" id="logo">
             </section>
         </aside>
         <!-- 模态框 HTML -->
@@ -158,17 +157,17 @@
         <div class="mole-editor-container">
             <div class="view-wrapper">
                 <!-- 2D -->
-                <iframe id="mole-editor" frameborder="0" src="/apps/ketcher/index.html"></iframe>
+                <iframe id="mole-editor" frameborder="0" src="./apps/ketcher/index.html"></iframe>
                 <!-- 3D iframe -->
-                <iframe id="mole-3d" frameborder="0" src="/apps/mole-3d/index.html"></iframe>
+                <iframe id="mole-3d" frameborder="0" src="./apps/mole-3d/index.html"></iframe>
             </div>
         </div>
         <!-- 分子属性 -->
         <div id="mole-feature-box" data-visible="false">
             <div id="mole-property-header">
-                <img src="/images/mole-property.svg" id="mole-property-logo">
+                <img src="./images/mole-property.svg" id="mole-property-logo">
                 <h3 id="header-title">分子属性</h3>
-                <img src="/images/cancel.svg" id="mole-property-cancel">
+                <img src="./images/cancel.svg" id="mole-property-cancel">
             </div>
             <div class="properties-container" id="properties-container">
                 <div class="tab-container">
@@ -214,17 +213,17 @@
         </div>
     </main>
     <!-- 主应用js -->
-    <script src="/js/api.js"></script>
-    <script src="/js/querybind.js"></script>
-    <script src="/js/getMolecule.js"></script>
-    <script src="/js/highlight.min.js"></script>
-    <script src="js/marked.min.js"></script>
-    <script src="/js/MessageHandler.js"></script>
-    <script src="/js/MoleculeFormatChecker.js"></script>
-    <script src="/js/AIChat.js"></script>
-    <script src="/js/moleCmd.js"></script>
-    <script src="/js/ai.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/querybind.js"></script>
+    <script src="./js/getMolecule.js"></script>
+    <script src="./js/highlight.min.js"></script>
+    <script src="./js/marked.min.js"></script>
+    <script src="./js/MessageHandler.js"></script>
+    <script src="./js/MoleculeFormatChecker.js"></script>
+    <script src="./js/AIChat.js"></script>
+    <script src="./js/moleCmd.js"></script>
+    <script src="./js/ai.js"></script>
+    <script src="./js/index.js"></script>
 
     <script>
         let aiPosition = document.getElementById("ai-position");

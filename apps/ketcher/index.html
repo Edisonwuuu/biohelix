@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <base href="/biohelix/">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Ketcher is a web-based chemical structure editor" />
@@ -12,7 +11,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
     <link rel="manifest" href="./manifest.json" />
     <title>Ketcher ae7591f</title>
-    <link href="/apps/ketcher/static/css/main.css" rel="stylesheet">
+    <link href="./static/css/main.css" rel="stylesheet">
     <script>
         const unit = window.parent.unit2d;
     </script>
@@ -36,7 +35,7 @@
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--standalone版本-->
-    <script src="/apps/ketcher/static/js/main.js"></script>
+    <script src="./static/js/main.js"></script>
     <script>
         // 添加分子的函数
         let layout_timer = null
@@ -52,24 +51,6 @@
             } catch (error) {
                 console.error('Error adding molecule:', error);
             }
-
-            // try {
-            //     if (layout_timer) {
-            //         clearTimeout(layout_timer)
-            //     }
-
-            //     layout_timer = setTimeout(async () => {
-            //         await ketcher.layout()
-            //         layout_timer = null
-            //         layout_timer_count = 0
-            //         isLayouting=false;
-            //         if(!isLayouting){
-            //             unit.sendMessage('layoutOverForMain','','main-app')
-            //         }
-            //     }, 1000 + layout_timer_count * 180)
-            // } catch (err) {
-            //     console.error(err)
-            // }
         }
 
         setTimeout(function () {
@@ -95,7 +76,6 @@
             button.setAttribute('title', '保存当前分子'); // 设置标题
             button.setAttribute('data-testid', 'fullscreen-mode-button'); // 设置测试ID
             button.setAttribute('id','mole-attribute')
-            // const moleAttribute=document.querySelector('#mole-attribute')
             const img = document.createElement('img');
             img.src = '../../images/save.png'; // 设置SVG文件的路径
             img.alt = '保存图标'; // 设置替代文本
@@ -112,12 +92,10 @@
             if (existingButton) {
                 buttonContainer.insertBefore(button, existingButton);
             } else {
-                // 如果没有找到任何按钮，就直接appendChild
                 buttonContainer.appendChild(button);
             }
 
             button.addEventListener('click', function (event) {
-                // 在这里编写你的点击事件处理代
                 unit.sendMessage('show-name-modal', '', 'main-app')
             });
             //  通信单元
@@ -152,10 +130,8 @@
             async function modifyMoleculeInKetcher(modifiedMoleculeData) {
                 try {
                     if (isSdfFormat(modifiedMoleculeData)) {
-                        // 如果是 SDF 格式，直接使用 setMolecule
                         await ketcher.addFragment(modifiedMoleculeData);
                     } else {
-                        // 其他格式使用原来的方式
                         await ketcher.addFragment('`' + modifiedMoleculeData + '`');
                     }
                     unit.sendMessage('remindResult', '分子结构已成功修改', 'unitMain');
@@ -184,27 +160,9 @@
                 let smiles = await ketcher.getSmiles();
                 let reg = /(?:^|\n)\s*-INDIGO-[\s\S]*?M\s+END\s*(?:\$\$\$\$\n)?/g;
                 let res = mol.match(reg) || [];
-                // 发送当前的 SDF 数据到 3D 渲模块
-                // unit.sendMessage('render-3d', res, '3d');
-                // unit.sendMessage('sdfChanged', res, 'main-app');
                 unit.sendMessage('sdfChanged', res, '3d');
                 unit.sendMessage('toAI', res, 'main-app');
                 unit.sendMessage('moleData', smiles, 'main-app');
-                // if (res.length !== 0) {
-                //     const trimmedSendMes = sendMes.split('\n').slice(2).join('\n');
-                //     let trimmedRes = res.join('\n').split('\n').slice(2); // 保留数组格式
-                //     trimmedRes.pop(); // 删除最后一行
-                //     trimmedRes = trimmedRes.join('\n'); // 重新拼接成字符串
-                //     trimmedRes = trimmedRes.trimEnd();
-                //     if (trimmedRes.endsWith('$$$$')) {
-                //         trimmedRes = trimmedRes.slice(0, -4); // 删除最后的 '$$$$'
-                //     }
-
-                //     if (trimmedSendMes !== trimmedRes) {
-                //         unit.sendMessage('toAI', res, 'main-app');
-                //         lastSentSdf = res; // 更新 lastSentSdf
-                //     }
-                // }
             });
         }, 300);
 
