@@ -352,7 +352,7 @@ const initApp = () => {
                 });
             } else {
                 userInfoElement.innerHTML = `
-                    <img src="/images/user.svg" alt="user-icon" id="user-icon">
+                    <img src="./images/user.svg" alt="user-icon" id="user-icon">
                     <span class="user-name">请登录</span>
                 `;
                 // 点击用户信息，显示登录框
