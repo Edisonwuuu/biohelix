@@ -1,138 +1,245 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抖音商家直跳</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            background: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            max-width: 400px;
-            width: 100%;
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 24px;
-            color: #333;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-        }
-        input:focus {
-            border-color: #fe2c55;
-            outline: none;
-        }
-        button {
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(135deg, #fe2c55, #ff0050);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        .tips {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-            line-height: 1.6;
-        }
-    </style>
+    <title>bioHelix</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/mgrid.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/ai.css">
+    <link rel="stylesheet" href="/css/onedark.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/toastify.min.css">
+    <script src="/apps/mole-3d/js/SHA256.js"></script>
+    <script type="text/javascript" src="/js/toastify.js"></script>
+    <script src="/js/message.js"></script>
+    <script>
+        window.unitMain = new MessageBus();
+        window.unit2d = new MessageBus();
+        window.unit3d = new MessageBus();
+        window.unitAI = new MessageBus();
+    </script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>抖音商家直跳</h1>
-        <input type="text" id="input" placeholder="粘贴链接 或 POI ID（如 7123456789012345678）">
-        <button id="btn" disabled>打开抖音商家页</button>
-        <div class="tips">
-            支持格式：<br>
-            • 纯 POI ID（数字）<br>
-            • https://www.douyin.com/poi/xxxxxxxx<br>
-            • v.douyin.com/xxxxxx（短链需手动提取 ID）<br><br>
-            微信内请先“在浏览器中打开”
+    <!-- 名称弹窗 -->
+    <div class="name-modal-overlay modal-overlay">
+        <div class="name-modal-container">
+            <div class="name-modal-header">
+                <h3 class="name-modal-title">请输入分子名称</h3>
+                <img src="/images/cancel.svg" alt="cancel-icon" class="name-modal-cancel">
+            </div>
+            <div class="name-modal-input">
+                <input type="text" placeholder="请输入分子名称">
+            </div>
+            <div class="name-modal-footer">
+                <button class="name-modal-save">保存</button>
+            </div>
         </div>
     </div>
+    <!-- 登录 -->
+    <div class="login-modal-overlay modal-overlay">
+        <div class="login-modal-container">
+            <img src="/images/cancel.svg" alt="cancel-icon" class="login-modal-cancel">
+            <div class="logo-section">
+            </div>
+            <div class="login-section">
+                <div class="login-tabs">
+                    <div class="login-tab active">登录</div>
+                    <div class="login-tab">注册</div>
+                </div>
+                <!-- 登录表单 -->
+                <div class="form-container login-form active">
+                    <div class="input-group">
+                        <input type="text" placeholder="账户">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="密码">
+                    </div>
+                    <!-- <div class="agreement">
+                        <input type="checkbox" id="agreement">
+                        <label for="agreement">我已阅读并同意用户协议、隐私政策、产品服务协议</label>
+                    </div> -->
+                    <button class="login-btn">登录</button>
+                    <div class="footer-links">
+                        <a href="#">忘记账户</a> | <a href="#">找回密码</a>
+                    </div>
+                </div>
+                <!-- 注册表单 -->
+                <div class="form-container register-form">
+                    <div class="input-group">
+                        <input type="text" placeholder="用户名">
+                    </div>
+                    <div class="input-group">
+                        <input type="email" placeholder="邮箱">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="密码">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="确认密码">
+                    </div>
+                    <!-- <div class="agreement">
+                        <input type="checkbox" id="agreement">
+                        <label for="agreement">我已阅读并同意用户协议、隐私政策、产品服务协议</label>
+                    </div> -->
+                    <button class="register-btn">注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 力场转换加载中 -->
+    <div id="loading-overlay">
+        <div id="loading_text" class="loading_text">
+            <span class="loading_text_span" style="--i: 0;">正在</span><span class="loading_text_span"
+                style="--i: 1;">力场</span><span class="loading_text_span" style="--i: 2;">转换</span><span
+                class="loading_text_span" style="--i: 3;">....</span>
+        </div>
+        <div class="progress_bar">
+            <div class="progress_bar_inner"></div>
+        </div>
+    </div>
+    <!-- AI正在处理中提示加载 -->
+    <div id="loading-overlay-2">
+        <div id="loading_text_2" class="loading_text">
+            <span class="loading_text_span" style="--i: 0;">正在</span><span class="loading_text_span"
+                style="--i: 1;">处理中,</span><span class="loading_text_span" style="--i: 2;">请稍候</span><span
+                class="loading_text_span" style="--i: 3;">....</span>
+        </div>
+        <div class="progress_bar">
+            <div class="progress_bar_inner"></div>
+        </div>
+    </div>
+    <header class="mobile-header">
+        <img src="/images/menu.svg" alt="menu" id="menu">
+        <img src="/images/logo.svg" alt="logo" id="logo">
+        <img src="/images/mole-property.svg" alt="mole-property" id="mole-property">
+    </header>
+    <!-- 主应用容器 -->
+    <main class="app-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <header class="user-info"></header>
+            <section class="search-container">
+                <input type="search" class="search-input" placeholder="搜索历史记录" />
+            </section>
+            <section class="sidebar-content">
+                <div class="mole-list-container editing-mole-list-container">
+                    <div class="mole-header collapsed">
+                        <span class="collapse-icon">▼</span>
+                        <span class="mole-title">正在编辑的分子</span>
+                        <span class="mole-title-right">全部清除</span>
+                    </div>
+                    <ul class="mole-list editing-mole-list"></ul>
+                </div>
+                <div class="mole-list-container">
+                    <div class="mole-header collapsed">
+                        <span class="collapse-icon">▼</span>
+                        <span class="mole-title">已保存的分子</span>
+                    </div>
+                    <ul class="mole-list saved-mole-list"></ul>
+                </div>
+            </section>
+            <section class="logo-container">
+                <img src="/images/logo.svg" alt="logo" id="logo">
+            </section>
+        </aside>
+        <!-- 模态框 HTML -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span id="close-modal" class="close-button-modal">&times;</span>
+                <div id="code-content" class="code-content"></div>
+            </div>
+        </div>
+        <!-- 分子编辑器 -->
+        <div class="mole-editor-container">
+            <div class="view-wrapper">
+                <!-- 2D -->
+                <iframe id="mole-editor" frameborder="0" src="/apps/ketcher/index.html"></iframe>
+                <!-- 3D iframe -->
+                <iframe id="mole-3d" frameborder="0" src="/apps/mole-3d/index.html"></iframe>
+            </div>
+        </div>
+        <!-- 分子属性 -->
+        <div id="mole-feature-box" data-visible="false">
+            <div id="mole-property-header">
+                <img src="/images/mole-property.svg" id="mole-property-logo">
+                <h3 id="header-title">分子属性</h3>
+                <img src="/images/cancel.svg" id="mole-property-cancel">
+            </div>
+            <div class="properties-container" id="properties-container">
+                <div class="tab-container">
+                    <!-- 可以根据需要添加更多分子 -->
+                </div>
+                <div id="molecule-properties">
+                    <!-- 分子属性将动态渲染到这里 -->
+                </div>
+            </div>
+            <div class="pages-container">    
+                <h3 class="papers-title">相关专利和论文</h3>
+                <div id="molecule-papers">
+                    <!-- 关于该分支的专利和论文渲染在这里 -->
+                </div>
+            </div>
+        </div>   
+        <!-- AI聊天容器 -->
+        <div class="ai-chat-container sm-12 md-8 lg-6" style="margin-top: 20px;">
+            <div id="messageContainer" class="chat-messages"></div>
+            <img id="ai-position" />
+            <div class="show-AI-content">
+                <div id="chat-messages-container"></div>
+            </div>
+            <div class="chat-container"></div>
+            <div class="input-area">
+                <div class="input-container">
+                    <button id="upload-button" class="upload-button" onclick="triggerImageUpload()">
+                        <img src="./images/image_w.png" alt="Upload">
+                    </button>
+                    <textarea id="userInput" class="chat-input" placeholder="请输入您的指令..."
+                        onkeypress="handleKeyPress(event)"></textarea>
+                    <button id="send-button" class="send-button" onclick="sendMessage()">
+                        <img src="./images/sendMessage.png" alt="Send">
+                    </button>
+                    <button id="pause-button" class="send-button pause-button" style="display: none;">
+                        <img src="./images/stop-button.png" alt="Pause">
+                    </button>
+                </div>
+                <!-- 3D按钮 -->
+                <button id="btn-3d" class="button button-3d icon-3d"></button>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" style="display: none;">
+        </div>
+    </main>
+    <!-- 主应用js -->
+    <script src="/js/api.js"></script>
+    <script src="/js/querybind.js"></script>
+    <script src="/js/getMolecule.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script src="js/marked.min.js"></script>
+    <script src="/js/MessageHandler.js"></script>
+    <script src="/js/MoleculeFormatChecker.js"></script>
+    <script src="/js/AIChat.js"></script>
+    <script src="/js/moleCmd.js"></script>
+    <script src="/js/ai.js"></script>
+    <script src="/js/index.js"></script>
 
     <script>
-        const input = document.getElementById('input');
-        const btn = document.getElementById('btn');
-        let poiId = null;
+        let aiPosition = document.getElementById("ai-position");
+        let notificationContent = document.querySelector('.notification-content');
+        let loadingOverlay2 = document.querySelector('#loading-overlay-2');
+        let showAIContent = document.querySelector(".show-AI-content");
+        const moleEditor = document.getElementById('mole-editor');
 
-        // 实时解析输入
-        input.addEventListener('input', () => {
-            const val = input.value.trim();
-            poiId = null;
-
-            if (/^\d{15,20}$/.test(val)) {
-                poiId = val;
-            } else {
-                const match = val.match(/\/poi\/(\d+)/) || val.match(/poi_id=(\d+)/);
-                if (match) poiId = match[1];
+        // 处理键盘键事件
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
             }
-
-            btn.disabled = !poiId;
-        });
-
-        // 点击跳转
-        btn.addEventListener('click', () => {
-            if (!poiId) return;
-
-            const ua = navigator.userAgent.toLowerCase();
-            if (/micromessenger/.test(ua)) {
-                alert('微信环境限制跳转\n请点击右上角 ... → 在浏览器中打开');
-                return;
-            }
-
-            const scheme = `snssdk1128://poi/detail?id=${poiId}&from=webview&refer=web`;
-            const fallback = `https://www.douyin.com/poi/${poiId}`;
-
-            // 尝试唤起 App
-            window.location.href = scheme;
-
-            // 隐藏 iframe 辅助（部分浏览器更稳）
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = scheme;
-                document.body.appendChild(iframe);
-                setTimeout(() => document.body.removeChild(iframe), 1000);
-            }, 300);
-
-            // 2秒后若未跳转成功，fallback 到网页
-            setTimeout(() => {
-                if (!document.hidden) {  // App 没接管页面
-                    window.location.href = fallback;
-                }
-            }, 2000);
-        });
+        }
     </script>
 </body>
+
 </html>

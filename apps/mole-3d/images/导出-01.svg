@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>导出-01</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3D显示" transform="translate(-884.000000, -21.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="编组-8" transform="translate(870.000000, 14.000000)">
+                <g id="导出-01" transform="translate(14.000000, 7.000000)">
+                    <path d="M13.7142857,13.7142857 L2.28571428,13.7142857 L2.28571428,9.14285714 L0,9.14285714 L0,16 L16,16 L16,9.14285714 L13.7142857,9.14285714 L13.7142857,13.7142857 L13.7142857,13.7142857 Z M11.76,6.99428572 L8,3.23428572 L4.24,6.99428572 L2.61714286,5.38285714 L8,0 L13.3828571,5.38285714 L11.76,6.99428572 Z" id="形状"></path>
+                    <polygon id="路径" points="6.85714286 2.28571429 9.14285714 2.28571429 9.14285714 11.4285714 6.85714286 11.4285714"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

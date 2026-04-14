@@ -1,0 +1,73 @@
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 30%;
+    top: 35%;
+    width: 40%;
+    height: 45%;
+    background-color: rgba(0, 0, 0, 0.3); /* 半透明背景 */
+    border-radius: 3%;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 9% auto;
+    width: 80%;
+    height: 75%;
+    max-width: 600px;
+    position: relative;
+    border-radius: 2.5%;
+    overflow-y: auto; 
+    scrollbar-width: none; 
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none; 
+}
+
+.close-button-modal {
+    position: absolute;
+    top: 2%;
+    right: 1%;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(30, 36, 49, 0.8);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    
+    &:hover {
+        background: #1e2431;
+        transform: scale(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.apply-button {
+    margin-top: 20px;
+    padding: 7px 15px;
+    background-color: #27C6D9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5%;
+    right: 0;
+}
+
+.apply-button:hover {
+    background-color: #39becd;
+}

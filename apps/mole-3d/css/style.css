@@ -1,0 +1,706 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@font-face {
+    font-family: 'PingFangSC-Regular';
+    src: url('./pingfang-regular.ttf') format('truetype');
+}
+#container {
+    position: relative;
+    height: calc(100% - 40px);
+    width: 85%;
+    left: 15%;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#exportOptions {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(103, 104, 132, 0.15) 0px 2px 5px;
+    padding-right: 5px;
+}
+
+#formatSelect {
+    /* 修改基础样式 */
+    width: 130px;  /* 调整宽度 */
+    height: 32px;
+    margin-right: 15px;
+    padding: 0 32px 0 12px;  /* 右侧留出更多空间放置箭头图标 */
+    border: 1px solid #DDDFE5;  /* 更改边框颜色 */
+    border-radius: 16px;  /* 调整圆角 */
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-size: 14px;
+    color: #1F2329;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: white;
+    
+    /* 添加下拉箭头图标 */
+    background-image: url('../images/down.svg');
+    background-position: right 12px center;  /* 调整箭头位置 */
+    background-repeat: no-repeat;
+    background-size: 12px;  /* 调整箭头大小 */
+    
+    /* 移除默认的下拉箭头 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 鼠标悬停状态 */
+#formatSelect:hover {
+    border-color: #C9CDD4;
+}
+
+/* 聚焦状态 */
+#formatSelect:focus {
+    border-color: #02ABB9;
+    box-shadow: 0 0 0 2px rgba(2, 171, 185, 0.1);
+}
+
+#convertSelect{
+    /* 修改基础样式 */
+    width: 145px;  /* 调整宽度 */
+    height: 32px;
+    margin-right: 15px;
+    margin-left:20px;
+    padding: 0 32px 0 12px;  /* 右侧留出更多空间放置箭头图标 */
+    border: 1px solid #DDDFE5;  /* 更改边框颜色 */
+    border-radius: 16px;  /* 调整圆角 */
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-size: 14px;
+    color: #1F2329;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: white;
+    
+    /* 添加下拉箭头图标 */
+    background-image: url('../images/down.svg');
+    background-position: right 12px center;  /* 调整箭头位置 */
+    background-repeat: no-repeat;
+    background-size: 12px;  /* 调整箭头大小 */
+    
+    /* 移除默认的下拉箭头 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+#convertSelect:hover {
+    border-color: #C9CDD4;
+}
+
+/* 聚焦状态 */
+#convertSelect:focus {
+    border-color: #02ABB9;
+    box-shadow: 0 0 0 2px rgba(2, 171, 185, 0.1);
+}
+
+#exportButton {
+    height:32px;
+    background-color: #02ABB9;
+    border: none;
+    color: white;
+    padding: 0 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* #exportButton:hover {
+    background-color: #1976D2;
+} */
+
+#exportButton:active {
+    transform: scale(0.98);
+}
+
+#processButton {
+    height:32px;
+    margin: 0 5px 0 15px;
+    background-color: #02ABB9;
+    border: none;
+    color: white;
+    padding: 0 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* &:hover {
+        background-color: #1976d2;
+    } */
+}
+.icon {
+    position: relative;
+    top: 1.5px;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* 导出按钮图标 */
+#exportButton .icon {
+    background-image: url('../images/download.svg');
+}
+
+/* 转换按钮图标 */
+#processButton .icon {
+    background-image: url('../images/04转换.svg');
+}
+
+/* PC端基础样式 */
+@media screen and (min-width: 993px) {  注意这里使用 min-width
+    #container {
+        width: 85%;
+        left: 15%;
+    }
+
+    #asideList {
+        position: absolute;
+        top: 8%;
+        left: 0;
+        width: 15%;
+        height: 92%;
+        background-color: #F9F9F9;
+        border-right: 1px solid #e0e0e0;
+        overflow-y: auto;
+        z-index: 2;
+        box-shadow: 1px 0 2px rgba(0, 0, 0, 0.01);
+        scrollbar-width: thin;
+        scrollbar-color: #d1d1d1 #f5f5f5;
+    }
+
+    .aside-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: block;  /* 确保是块级显示 */
+    }
+
+    .menu-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        font-family: 'PingFangSC-Regular', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        color: #333333;
+        border-bottom: 1px solid #d9d9d9;
+        text-align: center;
+        display: block;  /* 确保是块级显示 */
+    }
+}
+
+
+/* 全宽样式 */
+#container.full-width {
+    width: 100% !important;
+    left: 0 !important;
+}
+
+/* 滚动条样式 */
+#asideList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#asideList::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+#asideList::-webkit-scrollbar-thumb {
+    background: #d1d1d1;
+    border-radius: 3px;
+}
+
+/* 菜单列表样式 */
+.aside-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 菜单项样式 */
+.menu-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333333;
+    line-height: 20px;
+    position: relative;
+    margin: 2px 0;
+    border-bottom: 1px solid #d9d9d9;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.menu-item:hover {
+    background-color: #f6f8fa;
+    color: #02ABB9;
+    padding-left: 10px;
+}
+
+.menu-item.active {
+    background-color: #ffffff;
+    color: #02ABB9;
+    font-weight: 500;
+    border-right: 2px solid #02ABB9;
+}
+
+/* 防止文本选中 */
+
+.menu-item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* 可选：添加分割线效果 */
+
+.menu-item:last-child {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+
+
+/* 如果需要添加图标，预留位置 */
+
+.menu-item {
+    text-align: center;
+    /* padding-left: 40px; */
+    /* 为图标预留空间 */
+    /* position: relative; */
+}
+
+/* 通知样式 */
+.notification {
+    font-family: 'PingFangSC-Regular', sans-serif;
+    position: fixed;
+    top: 50px;
+    left: 3%;
+    width: 22%;
+    display: none;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.notification-content {
+    padding: 0;
+    text-align: center;
+}
+
+.notification h2 {
+    margin: 0;
+    padding: 15px;
+    color: #303133;
+    font-size: 20px;
+}
+
+.notification p {
+    margin: 0;
+    padding: 20px 15px;
+    color: #606266;
+    line-height: 1.5;
+    font-size: 14px;
+    text-align:left;
+}
+
+.close-btn {
+    width: 100%;
+    background-color: transparent;
+    color: #02ABB9;
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin: 0;
+}
+
+.close-btn:hover {
+    background-color: #f5f5f5;
+}
+
+/* 侧边栏容器样式 */
+#asideList {
+    position: absolute;
+    top: 8%;
+    left: 0%;
+    width: 15%;
+    height: 92%;
+    overflow-y: auto;
+    background-color: #F9F9F9;
+    border-right: 1px solid #e0e0e0;
+    z-index: 2;
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.01);
+    scrollbar-width: thin;
+    scrollbar-color: #d1d1d1 #f5f5f5;
+}
+
+
+/* wrapper样式 */
+#wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.01);
+    transition: all 0.022s ease;
+    border-radius:16px;
+}
+
+#wrapper.with-notification {
+    transition: all 0.022s ease;
+    left: 28%;
+    width: 70%;
+}
+
+/**
+*以下为响应式布局
+*/
+/* ... existing code ... */
+
+/* 基础样式保持不变 */
+
+/* 小屏幕样式 - 使用类名替代媒体查询 */
+.small-screen #wrapper {
+    border-radius: 0;
+}
+
+.small-screen #container {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.small-screen #asideList {
+    width: 100%;
+    height: auto;
+    max-height: 15%;
+    top: 85%;
+    left: 0;
+    border-right: none;
+    border-top: 1px solid #e0e0e0;
+}
+
+.small-screen .aside-menu {
+    display: flex;
+    overflow-x: auto;
+    padding: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.small-screen .menu-item {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #d9d9d9;
+    border-radius: 16px;
+    white-space: nowrap;
+}
+
+.small-screen #exportOptions {
+    display: flex;
+    padding: 0 4px;
+    height: 48px;
+    gap: 4px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.small-screen #formatSelect,
+.small-screen #styleSelect,
+.small-screen #convertSelect {
+    width: 15%;
+    min-width: 40px;
+    padding: 0px 16px 0 4px;
+    font-size: 11px;
+}
+.small-screen #convertSelect{
+    margin-left:10px;
+}
+
+.small-screen #exportButton,
+.small-screen #processButton {
+    width: 32%;
+    min-width: 85px;
+    padding: 0 4px;
+    font-size: 11px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.small-screen #exportButton span:not(.icon),
+.small-screen #processButton span:not(.icon) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: calc(100% - 18px);
+    display: inline-block;
+}
+
+.small-screen .icon {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    margin: 0;
+}
+
+.small-screen #styleSelect,
+.small-screen #formatSelect,
+.small-screen #convertSelect {
+    width: 18%;
+    min-width: 45px;
+    padding: 0 16px 0 4px;
+    font-size: 11px;
+}
+
+.small-screen .notification {
+    width: 90%;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.small-screen #wrapper.with-notification {
+    left: 0;
+    width: 100%;
+}
+
+/* Add styles for the new select element */
+#styleSelect {
+    width: 130px;
+    height: 32px;
+    margin-right: 15px;
+    padding: 0 32px 0 12px;
+    border: 1px solid #DDDFE5;
+    border-radius: 16px;
+    font-family: 'PingFangSC-Regular', sans-serif;
+    font-size: 14px;
+    color: #1F2329;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: white;
+    
+    background-image: url('../images/down.svg');
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#styleSelect:hover {
+    border-color: #C9CDD4;
+}
+
+#styleSelect:focus {
+    border-color: #02ABB9;
+    box-shadow: 0 0 0 2px rgba(2, 171, 185, 0.1);
+}
+
+/* Update small screen styles */
+.small-screen #styleSelect {
+    width: 100px;
+}
+
+.small-screen #exportButton,
+.small-screen #processButton {
+    width: 32px;  /* 改为固定宽度 */
+    min-width: 32px;  /* 修改最小宽度 */
+    height: 32px;  /* 保持宽高一致 */
+    padding: 0;  /* 移除内边距 */
+    border-radius: 50%;  /* 改为圆形按钮 */
+    display: flex;  /* 使用 flex 布局 */
+    align-items: center;
+    justify-content: center;
+}
+
+/* 隐藏小屏幕下的按钮文字 */
+.small-screen #exportButton span:not(.icon),
+.small-screen #processButton span:not(.icon) {
+    display: none;
+}
+
+/* 调整小屏幕下图标的大小和位置 */
+.small-screen .icon {
+    position: static;  /* 移除相对定位 */
+    width: 16px;  /* 稍微增加图标大小 */
+    height: 16px;
+    margin: 0;  /* 移除外边距 */
+}
+
+/* 调整小屏幕下选择框的样式以保持一致性 */
+.small-screen #formatSelect,
+.small-screen #styleSelect,
+.small-screen #convertSelect{
+    width: 80px;  
+    min-width: 80px;
+    margin-right: 8px;  
+}
+
+/* 调整导出选项容器在小屏幕下的间距 */
+.small-screen #exportOptions {
+    padding: 0 8px;  /* 调整内边距 */
+    gap: 8px;  /* 调整元素间距 */
+}
+
+/* 修改图标基础样式 */
+.icon {
+    position: relative;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 8px;
+}
+
+/* 导出按钮图标 */
+.export-icon {
+    background-image: url('../images/download.svg');
+}
+
+/* 转换按钮图标 */
+.process-icon {
+    background-image: url('../images/04转换.svg');
+}
+
+/* 按钮文字样式 */
+.button-text {
+    display: inline-block;
+}
+
+/* 小屏幕样式调整 */
+.small-screen #exportButton,
+.small-screen #processButton {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 小屏幕下隐藏按钮文字 */
+.small-screen .button-text {
+    display: none;
+}
+
+/* 小屏幕下调整图标样式 */
+.small-screen .icon {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+/* 移之前可能冲突的样式 */
+.small-screen #exportButton span:not(.icon),
+.small-screen #processButton span:not(.icon) {
+    display: none;
+}
+
+/* 全宽样式 */
+#container.full-width {
+    width: 100%;
+    left: 0;
+}
+
+/* 大屏幕下的 canvas 样式 */
+#viewer_viewer canvas {
+    width: 100%;  /* 始终占满容器宽度 */
+    height: 100%;
+}
+
+/* 当 container 有 full-width 类时的样式（无论大小屏） */
+#container.full-width #viewer_viewer canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* iframe 中的样式 */
+#viewer_viewer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#viewer_viewer canvas {
+    width: 100%;
+    height: 100%;
+    display: block;  /* 防止可能的间隙 */
+}
+
+/* popup 3D 样式 */
+.popup.popup-3d {
+    width: 100%;
+    height: 100%;
+}
+
+.popup.popup-3d iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.small-screen #viewer_viewer canvas {
+    width: 100% !important; /* 暂时使用 !important 来调试 */
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
